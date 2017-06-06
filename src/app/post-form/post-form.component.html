@@ -7,7 +7,7 @@
 | referencia del formulario en él.                                                            |
 |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
 -->
-<form novalidate>
+<form novalidate #post="ngForm" (ngSubmit)="submitPost(post)">
   <!--
   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
   | Purple Path                                                                                     |
@@ -17,6 +17,9 @@
   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
   -->
   <input type="text"
+         name="title"
+         required
+         [(ngModel)]="post.title"
          placeholder="Título"
          class="u-full-width">
   <!--
@@ -28,6 +31,9 @@
   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
   -->
   <textarea placeholder="Introduce tu historia"
+            name="intro"
+            required
+            [(ngModel)]="post.intro"
             class="u-full-width georgia-font"
             autogrow></textarea>
   <!--
@@ -39,6 +45,9 @@
   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
   -->
   <textarea placeholder="Cuenta tu historia"
+            name="body"
+            required
+            [(ngModel)]="post.body"
             class="u-full-width georgia-font"
             autogrow></textarea>
   <div>
@@ -57,8 +66,9 @@
     <div>
       <input type="datetime-local"
              name="publicationDate"
+             [required]="_publicationDateScheduled"
              [min]="_nowDatetimeLocal"
-             [ngModel]="_nowDatetimeLocal">
+             [(ngModel)]="post.publicationDate">
     </div>
   </div>
   <!--
@@ -69,6 +79,6 @@
   | válido. Para ello vas a necesitar acceder al 'FormGroup' del formulario. |
   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
   -->
-  <button type="submit"
+  <button type="submit" [disabled]="!post.valid"
           class="button-primary u-pull-right">Publicar</button>
 </form>
